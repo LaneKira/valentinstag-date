@@ -74,7 +74,7 @@ export default function Home() {
         {step === 1 && (
           <div className="py-10 animate-in fade-in zoom-in duration-700">
             <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse text-4xl">🐰</div>
-            <h1 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">Firdous mein Mörchen</h1>
+            <h1 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">Firdous mein Möhrchen</h1>
             <p className="text-rose-500 text-lg font-medium mb-12">willst du mein Valentinstag-Date sein? ❤️</p>
             <button onClick={() => setStep(2)} className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl text-xl shadow-lg active:scale-95 transition-all">Ja, von Herzen gerne!</button>
             <button style={{ position: 'fixed', top: noButtonPos.top, left: noButtonPos.left, transition: 'all 0.4s ease', zIndex: 50 }} className="bg-white/40 backdrop-blur-sm text-gray-400 py-2 px-6 rounded-full text-xs border border-white/20 pointer-events-none">Nein 🏃‍♂️</button>
