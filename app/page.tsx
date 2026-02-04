@@ -229,18 +229,45 @@ export default function Home() {
             </div>
           )}
 
-          {step === 9 && (
-            <div className="space-y-8">
-              <div className="text-4xl">✉️</div>
-              <div className="bg-rose-50/90 border border-rose-100 rounded-3xl p-6 italic text-gray-700 text-sm leading-relaxed shadow-sm">
-                <p className="mb-4">"Ich freue mich so unglaublich sehr, dass wir diesen Valentinstag gemeinsam verbringen."</p>
-                <p className="mb-4">"Dass du da bist, bedeutet mir alles."</p>
-                <div className="mt-4 text-right font-bold text-rose-500">— Dein Kira ❤️</div>
-              </div>
-              <button onClick={() => setStep(11)} className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl">Zum Plan ✨</button>
-            </div>
-          )}
-
+       {/* --- STEP 9: DER PERSÖNLICHE BRIEF --- */}
+{step === 9 && (
+  <div className="space-y-8 animate-in zoom-in duration-1000">
+    <div className="text-4xl animate-bounce">✉️</div>
+    <div className="bg-rose-50/90 border border-rose-100 rounded-[2.5rem] p-8 italic text-gray-700 text-sm leading-relaxed shadow-inner relative">
+      {/* Ein kleines Herz-Icon als Dekoration im Hintergrund */}
+      <span className="absolute top-4 right-6 text-rose-200 text-4xl opacity-50">♥</span>
+      
+      <p className="mb-4">
+        "Mein liebes Möhrchen, ich kann dir gar nicht sagen, wie sehr ich mich freue, 
+        dass du dieses Jahr mein Valentinstag-Date bist."
+      </p>
+      
+      <p className="mb-4">
+        "Vor ein paar Wochen saß ich noch in tiefer Trauer da und wollte diesen Tag 
+        einfach nur so schnell wie möglich hinter mich bringen. Er fühlte sich schwer an."
+      </p>
+      
+      <p className="mb-4">
+        "Aber jetzt? Jetzt kann ich es kaum erwarten. Weil ich diesen Tag genau so verbringen darf, 
+        wie ich es mir insgeheim immer erhofft und gewünscht habe: Mit einer Frau wie dir an meiner Seite."
+      </p>
+      
+      <p>
+        "Mit der Frau, die ich liebe. Danke, dass du da bist."
+      </p>
+      
+      <div className="mt-6 text-right font-bold text-rose-500 text-base">
+        — Dein Kira ❤️
+      </div>
+    </div>
+    <button 
+      onClick={() => setStep(11)} 
+      className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-rose-600 transition-colors"
+    >
+      Zum Plan ✨
+    </button>
+  </div>
+)}
           {step === 11 && (
             <div className="space-y-6">
               <h2 className="text-2xl font-black text-gray-900 uppercase">Unser Plan</h2>
