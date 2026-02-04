@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [step, setStep] = useState(1);
-  const [noButtonPos, setNoButtonPos] = useState({ top: '50%', left: '60%' });
+  const [noButtonPos, setNoButtonPos] = useState({ top: '70%', left: '50%' });
   const [time, setTime] = useState("18:00");
   const [choices, setChoices] = useState({ food: '', category: '', detail: '' });
 
@@ -23,8 +23,9 @@ export default function Home() {
   };
 
   const moveButton = () => {
-    const randomTop = Math.floor(Math.random() * 80) + 10;
-    const randomLeft = Math.floor(Math.random() * 80) + 10;
+    // Bereich eingrenzen, damit der Button innerhalb der Card bleibt (20% bis 80%)
+    const randomTop = Math.floor(Math.random() * 60) + 20;
+    const randomLeft = Math.floor(Math.random() * 60) + 20;
     setNoButtonPos({ top: `${randomTop}%`, left: `${randomLeft}%` });
   };
 
@@ -36,8 +37,8 @@ export default function Home() {
   }, [step]);
 
   const goBack = () => {
-    if (step === 11) setStep(9); // Vom Plan zum Brief
-    else if (step === 9) { // Vom Brief zurück zur letzten Detail-Aktion
+    if (step === 11) setStep(9);
+    else if (step === 9) {
       if (choices.category === 'Filme') setStep(6);
       else if (choices.category === 'Spaziergang') setStep(7);
       else if (choices.category === 'Spiele') setStep(8);
@@ -71,7 +72,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 text-black bg-gradient-to-br from-rose-100 via-white to-pink-100 animate-gradient-slow">
-      <div className="max-w-md w-full backdrop-blur-xl bg-white/70 rounded-[2.5rem] shadow-[0_20px_50px_rgba(251,113,133,0.15)] p-8 text-center border border-white/80 relative z-10 overflow-hidden">
+      <div className="max-w-md w-full backdrop-blur-xl bg-white/70 rounded-[2.5rem] shadow-[0_20px_50px_rgba(251,113,133,0.15)] p-8 text-center border border-white/80 relative z-10 overflow-hidden min-h-[500px] flex flex-col justify-center">
         <div className="absolute top-0 left-0 h-1.5 bg-rose-400 transition-all duration-500" style={{ width: `${(step / 11) * 100}%` }} />
 
         {step > 1 && (
@@ -79,18 +80,39 @@ export default function Home() {
         )}
 
         {step === 1 && (
-          <div className="py-10 animate-in fade-in zoom-in">
+          <div className="py-10 animate-in fade-in zoom-in relative h-full">
             <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-8 text-4xl">🐰</div>
             <h1 className="text-3xl font-extrabold text-gray-800 mb-4">Firdous mein Möhrchen</h1>
             <p className="text-rose-500 text-lg font-medium mb-12">willst du mein Valentinstag-Date sein? ❤️</p>
-            <button onClick={() => setStep(2)} className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl text-xl shadow-lg">Ja, von Herzen gerne!</button>
+            
+            <button 
+              onClick={() => setStep(2)} 
+              className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl text-xl shadow-lg active:scale-95 transition-all relative z-20"
+            >
+              Ja, von Herzen gerne!
+            </button>
+
+            {/* KORRIGIERTER NEIN-BUTTON */}
+            <button 
+              style={{ 
+                position: 'absolute', 
+                top: noButtonPos.top, 
+                left: noButtonPos.left, 
+                transform: 'translate(-50%, -50%)',
+                transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', 
+                zIndex: 10 
+              }} 
+              className="bg-white/60 backdrop-blur-sm text-gray-400 py-3 px-8 rounded-full text-sm border border-white/40 pointer-events-none whitespace-nowrap shadow-sm"
+            >
+              Nein 🏃‍♂️
+            </button>
           </div>
         )}
 
         {step === 2 && (
           <div className="animate-in slide-in-from-bottom-8 pt-8 text-center">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Wann sehen wir uns? 📅</h2>
-            <div className="bg-white/50 backdrop-blur-md rounded-3xl p-6 mb-8 border border-white inline-block w-full">
+            <div className="bg-white/50 backdrop-blur-md rounded-3xl p-6 mb-8 border border-white inline-block w-full shadow-sm">
               <p className="text-xs font-bold text-rose-400 uppercase mb-4 tracking-widest">Februar 2026</p>
               <div className="grid grid-cols-7 gap-2 text-[10px] font-bold text-gray-300 mb-6">
                 {['M', 'D', 'M', 'D', 'F', 'S', 'S'].map(d => <div key={d}>{d}</div>)}
@@ -112,7 +134,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* NEU: Infoblatt vor dem Dinner */}
         {step === 3 && (
           <div className="animate-in fade-in zoom-in pt-8">
             <div className="text-4xl mb-4 text-center">📝</div>
@@ -174,13 +195,13 @@ export default function Home() {
         {step === 9 && (
           <div className="animate-in fade-in zoom-in pt-8 flex flex-col items-center">
              <div className="text-4xl mb-6">✉️</div>
-            <div className="bg-rose-50/90 border border-rose-100 rounded-3xl p-6 shadow-inner italic text-gray-700 text-sm leading-relaxed">
+            <div className="bg-rose-50/90 border border-rose-100 rounded-3xl p-6 shadow-inner italic text-gray-700 text-sm leading-relaxed shadow-sm">
               <p className="mb-4">"Ich freue mich so unglaublich sehr, dass wir diesen Valentinstag gemeinsam verbringen."</p>
               <p className="mb-4">"Um ehrlich zu sein... ich hatte solche Angst, dass ich diesen besonderen Tag dieses Jahr ohne dich verbringen muss."</p>
               <p>"Dass du da bist, bedeutet mir alles."</p>
               <div className="mt-4 text-right font-bold text-rose-500">— Dein Kira ❤️</div>
             </div>
-            <button onClick={() => setStep(11)} className="mt-6 w-full bg-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl">Zum Plan ✨</button>
+            <button onClick={() => setStep(11)} className="mt-6 w-full bg-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl active:scale-95 transition-all">Zum Plan ✨</button>
           </div>
         )}
 
@@ -197,7 +218,7 @@ export default function Home() {
                 const message = `Hey Kira! ❤️ Ich habe unser Date geplant:%0A%0A📅 Datum: 14. Februar%0A⏰ Zeit: ${time} Uhr%0A🍽️ Essen: ${choices.food}%0A🎯 Aktivität: ${choices.detail}%0A%0AIch freue mich riesig! ✨🥕`;
                 window.open(`https://wa.me/4367763747209?text=${message}`, '_blank');
               }}
-              className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3"
+              className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all"
             >
               <span>💌</span> Plan senden
             </button>
