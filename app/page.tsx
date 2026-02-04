@@ -34,10 +34,23 @@ export default function Home() {
     }
   }, [step]);
 
+  // KORRIGIERTE ZURÜCK-LOGIK
   const goBack = () => {
-    if (step === 10) setStep(8);
-    else if (step === 8) setStep(4);
-    else if (step > 1) setStep(step - 1);
+    if (step === 10) {
+      setStep(8);
+    } else if (step === 8) {
+      // Wenn wir vom Brief zurückgehen, schauen wir, welche Kategorie gewählt war
+      if (choices.category === 'Filme') setStep(5);
+      else if (choices.category === 'Spaziergang') setStep(6);
+      else if (choices.category === 'Spiele') setStep(7);
+      else setStep(4);
+    } else if (step >= 5 && step <= 7) {
+      // Wenn wir von den Details zurückgehen, setzen wir die Auswahl zurück
+      setChoices({ ...choices, category: '', detail: '' });
+      setStep(4);
+    } else if (step > 1) {
+      setStep(step - 1);
+    }
   };
 
   const Widget = ({ title, img, onClick }: { title: string, img: string, onClick: () => void }) => (
@@ -74,6 +87,7 @@ export default function Home() {
         {step === 1 && (
           <div className="py-10 animate-in fade-in zoom-in duration-700">
             <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse text-4xl">🐰</div>
+            {/* KORREKTUR: Möhrchen statt Mörchen */}
             <h1 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">Firdous mein Möhrchen</h1>
             <p className="text-rose-500 text-lg font-medium mb-12">willst du mein Valentinstag-Date sein? ❤️</p>
             <button onClick={() => setStep(2)} className="w-full bg-rose-500 text-white font-bold py-5 rounded-2xl text-xl shadow-lg active:scale-95 transition-all">Ja, von Herzen gerne!</button>
@@ -137,7 +151,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* NEU: DER PERSÖNLICHE BRIEF */}
         {step === 8 && (
           <div className="animate-in fade-in zoom-in duration-1000 pt-8 flex flex-col items-center">
             <div className="text-4xl mb-6">✉️</div>
